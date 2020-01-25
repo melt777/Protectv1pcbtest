@@ -21,6 +21,8 @@ const int CLEAR = D2;//Clear Becons
 const int led_green = D8;
 const int led_red = D6;
 const int led_blue= D7;
+int buttonLOAD;//hold button load value
+int buttonCLEAR;//hold button clear value
 
 
 
@@ -56,56 +58,59 @@ void setup() {
   BLE.setTxPower(4); // Use lower power // Use lower power -20, -16, -12, -8, -4, 0, 4, 8.
   //Remote Reset Particle Function, to reset device from the cloud
   pinMode(BATT, INPUT);
-  digitalWrite (led_blue, HIGH);
-  digitalWrite (led_green, HIGH);
-  digitalWrite (led_green, HIGH);
-  digitalWrite (RELAY1, HIGH);
-  digitalWrite (RELAY2, HIGH);
+  digitalWrite (led_blue, HIGH);//led off
+  digitalWrite (led_green, HIGH);//led off
+  digitalWrite (led_red, HIGH);//led off
+  digitalWrite (RELAY1, LOW);//relay off
+  digitalWrite (RELAY2, LOW);//relay off
+  digitalWrite (LOAD, LOW);//off
+  digitalWrite (CLEAR, LOW);//off
 }
         
 void loop() {
-/*
-  digitalWrite (RELAY1, LOW);
-  delay(500);
-  digitalWrite (RELAY1, HIGH);
-  delay(500);
-  digitalWrite (RELAY2, LOW);
-  delay(500);
-  digitalWrite (RELAY2, HIGH);
-  delay(500);
- */
-/*
-  digitalWrite (led_red, LOW);
-  delay(500);
-  digitalWrite (led_red, HIGH);
-  delay(500);
-   digitalWrite (led_green, LOW);
-  delay(500);
-  digitalWrite (led_green, HIGH);
-  delay(500);
-  digitalWrite (led_blue, LOW);
-  delay(500);
-  digitalWrite (led_blue, HIGH);
-  delay(1000);
 
-*/
- // digitalWrite (led_green, LOW);
-  //delay(1000);
-  //digitalWrite (led_green, HIGH);
-  //delay(1000);
-  //digitalWrite (led_red, LOW);
- // delay(1000);
- // digitalWrite (led_green, HIGH);
- // delay(1000);
+ buttonLOAD = digitalRead (LOAD);
+  if (buttonLOAD == 0) {
+     digitalWrite (PCH1, HIGH);//on
+   digitalWrite (RELAY1, HIGH);//relay on
+    digitalWrite (led_red, LOW);//led on
+  delay(200);
+  digitalWrite (led_red, HIGH);//led off
+  digitalWrite (led_green, LOW);//led on
+  delay(200);
+  digitalWrite (led_green, HIGH);//led off
+  digitalWrite (led_blue, LOW);//led on
+  delay(200);
+  digitalWrite (led_blue, HIGH);//led off
+   
+   }
+   else {
+    digitalWrite (RELAY1, LOW);//relay off
+      digitalWrite (PCH1, LOW);//off
+   }
 
- digitalWrite (PCH1, LOW);
-  delay(500);
-  digitalWrite (PCH1, HIGH);
-  delay(500);
-  digitalWrite (NCH1, LOW);
-  delay(500);
-  digitalWrite (NCH1, HIGH);
-  delay(500);
+   buttonCLEAR = digitalRead (CLEAR);
+  if (buttonCLEAR == 0) {
+   digitalWrite (RELAY2, HIGH);//relay on
+     digitalWrite (NCH1, HIGH);//on
+      digitalWrite (led_red, LOW);//led on
+  delay(200);
+  digitalWrite (led_red, HIGH);//led off
+  digitalWrite (led_green, LOW);//led on
+  delay(200);
+  digitalWrite (led_green, HIGH);//led off
+  digitalWrite (led_blue, LOW);//led on
+  delay(200);
+  digitalWrite (led_blue, HIGH);//led off
+   }
+   else {
+    digitalWrite (RELAY2, LOW);//relay off
+      digitalWrite (NCH1, LOW);//off
+   }  
+
+ 
+
+
   
 } // end of main
 
